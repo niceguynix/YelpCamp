@@ -12,8 +12,9 @@ const Review = require('./models/review');
 const { campgroundSchema , reviewSchema } = require('./schemas');
 const morgan = require('morgan');
 
-const campgrounds = require('./routes/campgrounds');
-const reviews = require('./routes/reviews');
+const userRoutes = require('./routes/user');
+const campgroundRoutes = require('./routes/campgrounds');
+const reviewRoutes = require('./routes/reviews');
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
@@ -64,7 +65,7 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 
 passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+passport.deserializeUser(User.deserializeUser());       
 
 app.use((req,res,next)=>{
     res.locals.success = req.flash('success');
@@ -72,8 +73,9 @@ app.use((req,res,next)=>{
     next();
 });
 
-app.use('/campgrounds',campgrounds);
-app.use('/campgrounds/:id/reviews',reviews);
+app.use('/',userRoutes);
+app.use('/campgrounds',campgroundRoutes);
+app.use('/campgrounds/:id/reviews',reviewRoutes);
 
 app.get('/',(req,res)=>{
     res.render('home');
