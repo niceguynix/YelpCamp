@@ -31,4 +31,12 @@ router.post('/login',passport.authenticate('local',{failureFlash:true, failureRe
     res.redirect('/campgrounds');
 });
 
+router.get('/logout',(req,res)=>{
+    req.logout();
+    req.flash(
+        'success','Goodbye! Come back soon!'
+    )
+    res.redirect('/campgrounds');
+});
+
 module.exports = router;
