@@ -4,7 +4,7 @@
     <div class="col-6">
         <div class="card mb-3">
             <img src="<%= campground.image %>" class="card-img-top" alt="...">
-            <div class="card-body">
+            <div class="card-body"> 
               <h5 class="card-title"><%= campground.title %> </h5>
               <p class="card-text"><%= campground.description %></p>
              
@@ -12,6 +12,7 @@
 
             <ul class="list-group list-group-flush">
                 <li class="text-muted list-group-item"><%= campground.location  %></li>
+                <li class="list-group-item">Submitted by <%= campground.owner.username  %></li>
                 <li class="list-group-item">$<%= campground.price  %>/night</li>
             </ul>
 
