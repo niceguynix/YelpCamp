@@ -20,6 +20,11 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 
+if(process.env.NODE_ENV !== 'production'){
+    require('dotenv').config();
+}
+
+
 //still using local database
 mongoose.connect('mongodb://localhost:27017/yelp-camp',{
     useNewUrlParser:true,
