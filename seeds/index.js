@@ -29,7 +29,10 @@ const seedDB = async ()=>{
             owner:'61f677999dcb18eeae5d1a02',
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
             title: `${sample(descriptors)} ${sample(places)}`,
-            image: 'https://source.unsplash.com/collection/483251',
+            images: [{
+                "url" : "https://res.cloudinary.com/dovkb9lhi/image/upload/v1644377917/YelpCamp/a3rmnmnkrqavrx9letuk.jpg",
+                "filename" : "YelpCamp/a3rmnmnkrqavrx9letuk",
+        }],
             description: 'Generic description',
             price
 
