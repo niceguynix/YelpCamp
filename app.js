@@ -56,6 +56,7 @@ app.use(express.static(path.join(__dirname,'/public')));
 app.use(mongosanitize());
 
 const sessionConfig = {
+    name:'uid_c',
     secret:'thisshoudbeabettersecret',
     resave:false,
     saveUninitialized:true,
