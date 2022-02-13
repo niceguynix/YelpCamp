@@ -29,9 +29,10 @@ if(process.env.NODE_ENV !== 'production'){
     require('dotenv').config();
 }
 
-
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp';
+const secret = process.env.SECRET || 'thisshoudbeabettersecret';
 //still using local database
-mongoose.connect('mongodb://localhost:27017/yelp-camp',{
+mongoose.connect(dbUrl,{
     useNewUrlParser:true,
     useUnifiedTopology:true
 });
@@ -52,17 +53,17 @@ app.engine('ejs',ejsMate);
 app.set('view engine','ejs');
 app.set('views',path.join(__dirname,'/views'));
 
-app.use(morgan('tiny'));
+app.use(morgan('combined'));
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride('_method'))
 app.use(express.static(path.join(__dirname,'/public')));
 app.use(mongosanitize());
 
 const store = MongoStore.create({
-    mongoUrl: 'mongodb://localhost:27017/yelp-camp',
+    mongoUrl: dbUrl,
     touchAfter: 24 * 60 * 60,
     crypto: {
-        secret: 'thisshoudbeabettersecret'
+        secret: secret,
     }
 });
 
@@ -74,7 +75,7 @@ store.on('error',(err)=>{
 const sessionConfig = {
     name:'uid_c',
     store,
-    secret:'thisshoudbeabettersecret',
+    secret:secret,
     resave:false,
     saveUninitialized:true,
     cookie:{
