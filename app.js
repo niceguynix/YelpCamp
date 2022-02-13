@@ -23,6 +23,7 @@ const User = require('./models/user');
 const mongosanitize = require('express-mongo-sanitize');
 
 const helmet = require('helmet');
+const MongoStore = require('connect-mongo');
 
 if(process.env.NODE_ENV !== 'production'){
     require('dotenv').config();
@@ -57,8 +58,22 @@ app.use(methodOverride('_method'))
 app.use(express.static(path.join(__dirname,'/public')));
 app.use(mongosanitize());
 
+const store = MongoStore.create({
+    mongoUrl: 'mongodb://localhost:27017/yelp-camp',
+    touchAfter: 24 * 60 * 60,
+    crypto: {
+        secret: 'thisshoudbeabettersecret'
+    }
+});
+
+store.on('error',(err)=>{
+    console.log('session store error:',err);
+}
+)
+
 const sessionConfig = {
     name:'uid_c',
+    store,
     secret:'thisshoudbeabettersecret',
     resave:false,
     saveUninitialized:true,
