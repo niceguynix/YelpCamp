@@ -172,6 +172,6 @@ app.use((err,req,res,next)=>{
 })
 
 
-app.listen(80,()=>{
+app.listen(process.env.PORT || 80,()=>{
     console.log("Started!");
 })
